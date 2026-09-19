@@ -1,0 +1,63 @@
+<div class="ou-list-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <h1>Organizational Unit Management</h1>
+    <button class="btn-primary" (click)="openAddOuForm()">
+      <i class="pi pi-plus"></i>
+      Add New OU
+    </button>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-container">
+    <table class="ous-table">
+      <thead>
+        <tr>
+          <th>OU Name</th>
+          <th>Distinguished Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ou of ous" class="ou-row">
+          <td>{{ ou.name }}</td>
+          <td><code>{{ ou.distinguished_name }}</code></td>
+          <td>{{ ou.description || '-' }}</td>
+          <td>
+            <div class="action-buttons">
+              <button class="btn-edit" (click)="editOu(ou)">Edit</button>
+              <button class="btn-delete" (click)="deleteOu(ou)">Delete</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="ous.length === 0" class="empty-state">
+      <i class="pi pi-sitemap" style="font-size: 3rem; color: #ccc;"></i>
+      <p>No organizational units found</p>
+    </div>
+  </div>
+
+  <!-- Formulaire natif d'ajout/modification OU -->
+  <div class="native-modal" *ngIf="showOuDetailDialog && selectedOu">
+    <div class="native-modal-content">
+      <h2>{{ isAddMode ? 'Add Organizational Unit' : 'Edit Organizational Unit' }}</h2>
+      <form (ngSubmit)="isAddMode ? addOu() : saveOuEdits()">
+        <label>OU Name* :</label>
+        <input *ngIf="selectedOu" [(ngModel)]="selectedOu.name" name="name" required />
+
+        <label>Distinguished Name* :</label>
+        <input *ngIf="selectedOu" [(ngModel)]="selectedOu.distinguished_name" name="distinguished_name" required [readonly]="!isAddMode" />
+
+        <label>Description :</label>
+        <textarea *ngIf="selectedOu" [(ngModel)]="selectedOu.description" name="description"></textarea>
+
+        <div class="modal-actions">
+          <button type="submit">{{ isAddMode ? 'Add' : 'Save' }}</button>
+          <button type="button" (click)="cancelEdit()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> 

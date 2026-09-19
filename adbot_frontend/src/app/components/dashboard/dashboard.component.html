@@ -1,0 +1,126 @@
+<div class="dashboard">
+  <!-- Header with Theme Toggle -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1>Dashboard</h1>
+      <p>Overview of your Active Directory environment</p>
+    </div>
+    <button class="theme-toggle" (click)="toggleTheme()" [title]="currentTheme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'">
+      <i [class]="currentTheme === 'light' ? 'pi pi-moon' : 'pi pi-sun'"></i>
+      <span>{{ currentTheme === 'light' ? 'Dark Mode' : 'Light Mode' }}</span>
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading dashboard data...</p>
+  </div>
+
+  <!-- Statistics Cards Row -->
+  <div class="stats-row" *ngIf="!loading">
+    <div class="stat-card">
+      <div class="stat-content">
+        <div class="stat-info">
+          <h3 class="stat-title">TOTAL USERS</h3>
+          <div class="stat-value">{{ stats.totalUsers.toLocaleString() }}</div>
+          <p class="stat-description">Active Directory accounts</p>
+          <div class="stat-change positive">{{ stats.enabledUsers }} enabled, {{ stats.disabledUsers }} disabled</div>
+        </div>
+        <div class="stat-icon">
+          <i class="pi pi-users"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-content">
+        <div class="stat-info">
+          <h3 class="stat-title">ACTIVE GROUPS</h3>
+          <div class="stat-value">{{ stats.activeGroups }}</div>
+          <p class="stat-description">Security and distribution groups</p>
+          <div class="stat-change positive">Real-time count</div>
+        </div>
+        <div class="stat-icon">
+          <i class="pi pi-users"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-content">
+        <div class="stat-info">
+          <h3 class="stat-title">COMPUTERS</h3>
+          <div class="stat-value">{{ stats.computers.toLocaleString() }}</div>
+          <p class="stat-description">Domain-joined machines</p>
+          <div class="stat-change positive">Real-time count</div>
+        </div>
+        <div class="stat-icon">
+          <i class="pi pi-desktop"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-content">
+        <div class="stat-info">
+          <h3 class="stat-title">ORGANIZATIONAL UNITS</h3>
+          <div class="stat-value">{{ stats.organizationalUnits }}</div>
+          <p class="stat-description">OU structure</p>
+          <div class="stat-change positive">Real-time count</div>
+        </div>
+        <div class="stat-icon">
+          <i class="pi pi-sitemap"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity and Actions Row -->
+  <div class="content-row" *ngIf="!loading">
+    <!-- Recent Activity Card -->
+    <div class="activity-card">
+      <div class="card-header">
+        <h3>Recent Activity</h3>
+        <p>Latest changes in your Active Directory</p>
+      </div>
+      <div class="activity-list">
+        <div 
+          *ngFor="let activity of recentActivity" 
+          class="activity-item"
+          [style.border-left-color]="getStatusColor(activity.type)">
+          <div class="activity-dot" [style.background-color]="getStatusColor(activity.type)"></div>
+          <div class="activity-content">
+            <div class="activity-description">{{ activity.description }}</div>
+            <div class="activity-meta">
+              <span class="activity-user">by {{ activity.user }}</span>
+              <span class="activity-time">{{ activity.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions Card -->
+    <div class="actions-card">
+      <div class="card-header">
+        <h3>Quick Actions</h3>
+        <p>Common administrative tasks</p>
+      </div>
+      <div class="actions-list">
+        <div 
+          *ngFor="let action of quickActions" 
+          class="action-item"
+          [routerLink]="action.route">
+          <div class="action-icon">
+            <i [class]="action.icon"></i>
+          </div>
+          <div class="action-content">
+            <h4 class="action-title">{{ action.title }}</h4>
+            <p class="action-description">{{ action.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

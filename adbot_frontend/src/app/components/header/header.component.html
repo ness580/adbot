@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="header-content">
+    <div class="page-info">
+      <h1 class="page-title">{{ title }}</h1>
+      <p class="page-subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="header-actions">
+      <div class="user-info" *ngIf="currentUser">
+        <i class="pi pi-user"></i>
+        <span>{{ currentUser }}</span>
+      </div>
+      <button class="theme-toggle" (click)="toggleTheme()" [title]="currentTheme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'">
+        <i [class]="currentTheme === 'light' ? 'pi pi-moon' : 'pi pi-sun'"></i>
+        <span>{{ currentTheme === 'light' ? 'Dark Mode' : 'Light Mode' }}</span>
+      </button>
+      <button class="logout-button" (click)="logout()" *ngIf="currentUser" title="Se déconnecter">
+        <i class="pi pi-sign-out"></i>
+        <span>Déconnexion</span>
+      </button>
+    </div>
+  </div>
+</header> 
