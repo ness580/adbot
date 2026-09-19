@@ -92,10 +92,3 @@ npm start
 
 L'application est accessible sur `http://localhost:4200`  
 L'API est documentée sur `http://localhost:8000/docs`
-
----
-
-## Réalisé par
-
-**Nessrine Amri** — Stagiaire ingénierie informatique  
-Intercom Technologies
